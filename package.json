@@ -1,0 +1,25 @@
+{
+    "name": "fndash",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "start": "nodemon -w src --exec \"node src\"",
+        "deploy": "node src",
+        "format": "prettier --write src/**/*"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "body-parser": "^1.19.0",
+        "cors": "^2.8.5",
+        "express": "^4.17.1",
+        "morgan": "^1.10.0",
+        "on-finished": "^2.3.0",
+        "winston": "^3.2.1"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.2",
+        "prettier": "^2.0.2"
+    }
+}
