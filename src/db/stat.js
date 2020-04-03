@@ -26,8 +26,8 @@ module.exports = (sequelize, DataTypes) => {
                 field: 'minutesplayed',
             },
             placements: {
-                type: DataTypes.INTEGER,
-                field: 'minutesplayed',
+                type: DataTypes.JSONB,
+                field: 'placements',
             },
         },
         {
@@ -40,6 +40,11 @@ module.exports = (sequelize, DataTypes) => {
         db.Stat.belongsTo(db.Input, {
             foreignKey: 'inputId',
             as: 'input',
+        });
+
+        db.Stat.hasMany(db.Game, {
+            foreignKey: 'statId',
+            as: 'games',
         });
     };
 
