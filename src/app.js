@@ -9,8 +9,6 @@ app.use(logging);
 app.use(cors());
 app.use(bp.json());
 
-app.get('/', (_, res) => {
-    res.send('<h1>Hello</h1>');
-});
+app.use('/api/users', require('./routes/users'));
 
 module.exports = app;

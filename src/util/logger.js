@@ -8,6 +8,6 @@ module.exports = createLogger({
     exitOnError: false,
     format: combine(
         timestamp({ format: 'HH:mm:ss.SSS' }),
-        printf((info) => `${info.timestamp} [${info.level.toUpperCase()}]: ${info.message}`)
+        printf(info => `${info.timestamp} [${info.level.toUpperCase()}]: ${info.message}`)
     ),
 });
