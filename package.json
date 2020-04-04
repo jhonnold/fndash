@@ -4,9 +4,12 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "start": "nodemon -w src --exec \"node src\"",
-        "deploy": "node src",
-        "format": "prettier --write src/**/*"
+        "start": "concurrently \"npm run start:server\" \"npm run start:client\"",
+        "start:client": "webpack-dev-server --mode development --open --hot",
+        "start:server": "nodemon -w server --exec \"node server\"",
+        "build:client": "webpack --mode production",
+        "deploy": "npm run build:client && node server",
+        "format": "prettier --write {server,client}/**/*"
     },
     "author": "",
     "license": "ISC",
@@ -19,11 +22,35 @@
         "on-finished": "^2.3.0",
         "pg": "^8.0.0",
         "pg-hstore": "^2.3.3",
+        "react": "^16.13.1",
+        "react-dom": "^16.13.1",
         "sequelize": "^5.21.5",
         "winston": "^3.2.1"
     },
     "devDependencies": {
+        "@babel/core": "^7.9.0",
+        "@babel/preset-env": "^7.9.0",
+        "@babel/preset-react": "^7.9.4",
+        "@hot-loader/react-dom": "^16.13.0",
+        "autoprefixer": "^9.7.5",
+        "babel-loader": "^8.1.0",
+        "babel-plugin-transform-class-properties": "^6.24.1",
+        "babel-polyfill": "^6.26.0",
+        "clean-webpack-plugin": "^3.0.0",
+        "concurrently": "^5.1.0",
+        "css-loader": "^3.4.2",
+        "html-webpack-plugin": "^4.0.4",
+        "mini-css-extract-plugin": "^0.9.0",
+        "node-sass": "^4.13.1",
         "nodemon": "^2.0.2",
-        "prettier": "^2.0.2"
+        "postcss-loader": "^3.0.0",
+        "prettier": "^2.0.2",
+        "react-hot-loader": "^4.12.20",
+        "sass-loader": "^8.0.2",
+        "style-loader": "^1.1.3",
+        "uglifyjs-webpack-plugin": "^2.2.0",
+        "webpack": "^4.42.1",
+        "webpack-cli": "^3.3.11",
+        "webpack-dev-server": "^3.10.3"
     }
 }
