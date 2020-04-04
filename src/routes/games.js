@@ -4,6 +4,31 @@ const db = require('../db');
 
 const router = express.Router();
 
+router.get('/', async (req, res) => {
+    const { inputId } = req.query;
+    if (!inputId) return res.sendStatus(400);
+
+    const games = await db.Game.findAll({
+        order: [['timePlayed', 'DESC']],
+        include: {
+            required: true,
+            model: db.Stat,
+            as: 'stat',
+            include: {
+                required: true,
+                model: db.Input,
+                as: 'input',
+                where: {
+                    id: inputId,
+                },
+                include: 'user',
+            },
+        },
+    });
+
+    return res.json(games);
+});
+
 router.get('/active', async (_, res) => {
     const mostRecentGames = await db.Game.findAll({
         attributes: [[db.sequelize.fn('max', db.sequelize.col('Game.id')), 'id']],
