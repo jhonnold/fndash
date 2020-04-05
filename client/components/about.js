@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const About = () => (
-    <section>
+    <main>
         <h2>About Us</h2>
         <p>
             FN Dash is a fortnite tracking solution with the ultimate goal of <em>detailed</em> and <em>accurate</em>{' '}
@@ -20,7 +20,7 @@ const About = () => (
             you are ready to signup and join the many other FN Dash players in their endeavor to improve,{' '}
             <Link to="/signup">click here.</Link>
         </p>
-    </section>
+    </main>
 );
 
 export default About;

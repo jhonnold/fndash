@@ -1,5 +1,6 @@
 @charset 'utf-8';
 
+@import '../../../node_modules/normalize.css/normalize.css';
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,600');
 
 html,
@@ -20,36 +21,9 @@ body {
     flex-direction: column;
 }
 
-.home-container {
-    width: 100%;
-    text-align: center;
-    padding: 10px 0;
-
-    h5 {
-        color: #fafafa;
-        text-align: center;
-        font-style: italic;
-    }
-
-    img {
-        height: 200px;
-    }
-}
-
-.nav ul {
-    display: flex;
-    justify-content: space-around;
-    list-style-type: none;
-    padding: 0;
-
-    a {
-        color: white;
-    }
-}
-
 .active-game {
+    margin: 5px 0;
     padding: 10px;
-    margin: 10px;
     border-radius: 5px;
     background-color: #2b2e3d;
     border-left: 1px solid #27eea0;

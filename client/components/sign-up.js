@@ -1,7 +1,7 @@
 import React from 'react';
 
 const SignUp = () => (
-    <section>
+    <main>
         <h2>Sign Up</h2>
         <p>Unfortunately, FN Dash has been retired and no-longer is accepting new users.</p>
         <form>
@@ -9,7 +9,7 @@ const SignUp = () => (
             <input name="username" placeholder="Enter your username..." disabled />
             <button disabled>Track my stats!</button>
         </form>
-    </section>
+    </main>
 );
 
 export default SignUp;

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Grid, Row } from 'react-flexbox-grid';
 import { Switch, Route } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import Banner from '../components/banner';
@@ -11,14 +12,14 @@ const MainPage = () => (
         <Helmet>
             <title>FN Dash</title>
         </Helmet>
-        <div className="home-container">
+        <Grid>
             <Banner />
             <Switch>
                 <Route path="/signup" component={SignUp} />
                 <Route path="/about" component={About} />
                 <Route path="/" component={ActiveUsers} />
             </Switch>
-        </div>
+        </Grid>
     </>
 );
 
