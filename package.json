@@ -9,7 +9,7 @@
         "start:server": "nodemon -w server --exec \"node server\"",
         "build:client": "webpack --mode production",
         "deploy": "npm run build:client && node server",
-        "format": "prettier --write {server,client}/**/*"
+        "format": "prettier --write {server,client}/**/*.js"
     },
     "author": "",
     "license": "ISC",
