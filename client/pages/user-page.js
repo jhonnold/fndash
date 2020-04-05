@@ -4,6 +4,7 @@ import { Link, NavLink } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import _get from 'lodash/get';
 import logo from '../assets/img/horizontal-logo.png';
+import Records from '../components/records';
 
 const UserPage = props => {
     const [user, setUser] = useState({});
@@ -64,7 +65,7 @@ const UserPage = props => {
             <Grid>
                 <Row>
                     <Col xs={12} sm={6}>
-                        Test
+                        <Records games={games} />
                     </Col>
                     <Col xs={12} sm={6}>
                         Test
