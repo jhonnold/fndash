@@ -8,7 +8,6 @@ import _keys from 'lodash/keys';
 const Records = ({ games }) => {
     const gamesByMode = _groupBy(games, 'stat.mode');
     const records = _transform(gamesByMode, (r, v, k) => (r[k] = _maxBy(v, 'kills')), {});
-    console.log(records);
 
     return (
         <>
