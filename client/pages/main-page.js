@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Row } from 'react-flexbox-grid';
+import { Grid } from 'react-flexbox-grid';
 import { Switch, Route } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import Banner from '../components/banner';
