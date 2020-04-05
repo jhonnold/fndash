@@ -2,6 +2,7 @@ const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const isDev = process.env.NODE_ENV !== 'production';
 
@@ -23,7 +24,6 @@ module.exports = {
         alias: {
             'react-dom': '@hot-loader/react-dom',
         },
-        modules: [__dirname, 'node_modules'],
     },
     module: {
         rules: [
@@ -74,12 +74,14 @@ module.exports = {
         ],
     },
     plugins: [
-        new HtmlWebpackPlugin({ template: './assets/index.html' }),
+        new HtmlWebpackPlugin({ template: './public/index.html' }),
 
         new MiniCssExtractPlugin({
             filename: isDev ? '[name].css' : '[name].[hash].css',
             chunkFilename: isDev ? '[id].css' : '[id].[hash].css',
         }),
+
+        new CopyPlugin([{ from: './public/favicon.ico' }]),
 
         new CleanWebpackPlugin(),
     ],

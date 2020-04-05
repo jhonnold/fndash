@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { hot } from 'react-hot-loader/root';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import HomePage from './pages/home-page';
+import MainPage from './pages/main-page';
 
 const App = () => (
     <Router>
         <Switch>
-            <Route exact path="/" component={HomePage} />
+            <Route path="/" component={MainPage} />
         </Switch>
     </Router>
 );
