@@ -23,6 +23,7 @@ module.exports = {
         alias: {
             'react-dom': '@hot-loader/react-dom',
         },
+        modules: [__dirname, 'node_modules'],
     },
     module: {
         rules: [
@@ -59,10 +60,21 @@ module.exports = {
                     },
                 ],
             },
+            {
+                test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            name: 'static/img/[name].[hash:8].[ext]',
+                        },
+                    },
+                ],
+            },
         ],
     },
     plugins: [
-        new HtmlWebpackPlugin({ template: './public/index.html' }),
+        new HtmlWebpackPlugin({ template: './assets/index.html' }),
 
         new MiniCssExtractPlugin({
             filename: isDev ? '[name].css' : '[name].[hash].css',

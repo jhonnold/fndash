@@ -1,19 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { hot } from 'react-hot-loader/root';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import HomePage from './pages/home-page';
 
-const App = () => {
-    const [res, setRes] = useState({});
-
-    useEffect(() => {
-        (async () => {
-            const res = await fetch('/api/users');
-            const data = await res.json();
-
-            setRes(data);
-        })();
-    }, []);
-
-    return <div>{JSON.stringify(res, null, 4)}</div>;
-};
+const App = () => (
+    <Router>
+        <Switch>
+            <Route exact path="/" component={HomePage} />
+        </Switch>
+    </Router>
+);
 
 export default hot(App);
