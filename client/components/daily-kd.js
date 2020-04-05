@@ -22,7 +22,7 @@ const DailyKD = ({ games }) => {
 
     console.log(kdByDay);
 
-    return <p>Hi</p>;
+    return <p>Daily KD</p>;
 };
 
 export default DailyKD;

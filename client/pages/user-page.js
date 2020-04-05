@@ -7,6 +7,7 @@ import logo from '../assets/img/horizontal-logo.png';
 import Records from '../components/records';
 import Games from '../components/games';
 import DailyKD from '../components/daily-kd';
+import DailyGameCount from '../components/daily-game-count';
 
 const UserPage = props => {
     const [user, setUser] = useState({});
@@ -72,6 +73,7 @@ const UserPage = props => {
                     </Col>
                     <Col xs={12} sm={6}>
                         <DailyKD games={games} />
+                        <DailyGameCount games={games} />
                     </Col>
                 </Row>
             </Grid>
