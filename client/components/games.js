@@ -5,7 +5,7 @@ const Games = ({ games }) => (
     <>
         <h3>Games</h3>
         {_slice(games, 0, 20).map(g => (
-            <div key={games.id}>
+            <div key={g.id}>
                 <h6>
                     {g.stat.name} {g.stat.mode} Match
                 </h6>

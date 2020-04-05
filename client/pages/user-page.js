@@ -6,6 +6,7 @@ import _get from 'lodash/get';
 import logo from '../assets/img/horizontal-logo.png';
 import Records from '../components/records';
 import Games from '../components/games';
+import DailyKD from '../components/daily-kd';
 
 const UserPage = props => {
     const [user, setUser] = useState({});
@@ -70,7 +71,7 @@ const UserPage = props => {
                         <Games games={games} />
                     </Col>
                     <Col xs={12} sm={6}>
-                        Test
+                        <DailyKD games={games} />
                     </Col>
                 </Row>
             </Grid>
