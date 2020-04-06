@@ -3,7 +3,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const isDev = process.env.NODE_ENV !== 'production';
 
 module.exports = {
@@ -86,21 +86,8 @@ module.exports = {
         new CleanWebpackPlugin(),
     ],
     optimization: {
-        splitChunks: {
-            chunks: 'all',
-            minChunks: 2,
-        },
-        minimizer: [
-            new UglifyJsPlugin({
-                uglifyOptions: {
-                    compress: {
-                        unused: true,
-                        dead_code: true,
-                    },
-                },
-                sourceMap: true,
-            }),
-        ],
+        minimize: true,
+        minimizer: [new TerserPlugin()],
     },
     performance: { hints: false },
 };
