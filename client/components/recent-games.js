@@ -3,12 +3,12 @@ import { Row, Col } from 'react-flexbox-grid';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 
-const ActiveUsers = () => {
+const RecentGames = () => {
     const [games, setGames] = useState([]);
 
     useEffect(() => {
         (async () => {
-            const res = await fetch('/api/games/active');
+            const res = await fetch('/api/games/recent');
             const data = await res.json();
 
             setGames(data);
@@ -17,7 +17,7 @@ const ActiveUsers = () => {
 
     const renderGames = () =>
         games.map(g => (
-            <Col xs={12} key={g.id} className="active-game">
+            <Col xs={12} key={g.id} className="recent-game">
                 <Link to={`/users/${g.stat.input.user.id}`}>
                     <h5>{g.stat.input.user.username}</h5>
                     <p>Played {moment(g.timePlayed).fromNow()}</p>
@@ -31,10 +31,10 @@ const ActiveUsers = () => {
 
     return (
         <main>
-            <h3>Active Users</h3>
+            <h3>Recent Games</h3>
             <Row>{renderGames()}</Row>
         </main>
     );
 };
 
-export default ActiveUsers;
+export default RecentGames;
