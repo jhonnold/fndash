@@ -12,8 +12,8 @@ router.get('/', async (req, res) => {
     return res.json(games);
 });
 
-router.get('/active', async (_, res) => {
-    const games = await gameService.getLastGamePerUser();
+router.get('/recent', async (_, res) => {
+    const games = await gameService.getRecent();
 
     return res.json(games);
 });

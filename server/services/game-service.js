@@ -1,8 +1,8 @@
 const { Op } = require('sequelize');
 const db = require('../db');
 
-module.exports = {
-    getAllFor: ({ inputId }) =>
+class GameService {
+    getAllFor = ({ inputId }) =>
         db.Game.findAll({
             order: [['timePlayed', 'DESC']],
             include: {
@@ -19,31 +19,11 @@ module.exports = {
                     include: 'user',
                 },
             },
-        }),
-
-    getLastGamePerUser: async () => {
-        const maxGameIdForUsers = await db.Game.findAll({
-            attributes: [[db.sequelize.fn('max', db.sequelize.col('Game.id')), 'id']],
-            group: [db.sequelize.col('stat.input.user_id')],
-            include: {
-                required: true,
-                model: db.Stat,
-                attributes: [],
-                as: 'stat',
-                include: {
-                    required: true,
-                    model: db.Input,
-                    attributes: [],
-                    as: 'input',
-                },
-            },
         });
 
-        const ids = maxGameIdForUsers.map(g => g.id);
-
-        return db.Game.findAll({
-            where: { id: { [Op.in]: ids } },
-            order: [['timePlayed', 'DESC']],
+    getRecent = () =>
+        db.Game.findAll({
+            where: { timePlayed: { [Op.gt]: new Date('2019-08-24 21:45:00.000') } },
             include: {
                 required: true,
                 model: db.Stat,
@@ -60,5 +40,6 @@ module.exports = {
                 },
             },
         });
-    },
-};
+}
+
+module.exports = new GameService();
