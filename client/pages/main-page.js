@@ -12,8 +12,8 @@ const MainPage = () => (
         <Helmet>
             <title>FN Dash</title>
         </Helmet>
+        <Banner />
         <Grid>
-            <Banner />
             <Switch>
                 <Route path="/signup" component={SignUp} />
                 <Route path="/about" component={About} />
