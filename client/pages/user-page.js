@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col, Grid } from 'react-flexbox-grid';
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import _get from 'lodash/get';
 import logo from '../assets/img/horizontal-logo.png';
+import SearchUser from '../components/search-user';
 import Records from '../components/records';
 import Games from '../components/games';
 import DailyKD from '../components/daily-kd';
@@ -14,15 +15,16 @@ const UserPage = props => {
     const [games, setGames] = useState([]);
     const input = _get(user, ['inputs', 0], {});
 
+    const { userId } = props.match.params;
+
     useEffect(() => {
         (async () => {
-            const { userId } = props.match.params;
             const res = await fetch(`/api/users/${userId}`);
             const data = await res.json();
 
             setUser(data);
         })();
-    }, []);
+    }, [userId]);
 
     useEffect(() => {
         (async () => {
@@ -40,27 +42,21 @@ const UserPage = props => {
             <Helmet>
                 <title>{`${user.username || ''} Stats - FN Dash`}</title>
             </Helmet>
-            <Grid fluid style={{ backgroundColor: '#2b2e3d' }}>
+            <Grid fluid style={{ backgroundColor: '#2b2e3d', padding: '1rem', marginBottom: '1rem' }}>
                 <Grid>
                     <Row between="xs">
-                        <Col>
+                        <Col xs={4}>
                             <Link to="/">
                                 <img src={logo} alt="FN Dash" style={{ height: 40 }} />
                             </Link>
                         </Col>
-                        <Col>Search For...</Col>
+                        <Col lg={3} md={4} xs={6}>
+                            <SearchUser />
+                        </Col>
                     </Row>
                     <Row between="xs" bottom="xs">
                         <Col>
-                            <h1>{user.username}</h1>
-                        </Col>
-                        <Col>
-                            <Row tagName="ul">
-                                <Col>All</Col>
-                                <Col>Solo</Col>
-                                <Col>Duo</Col>
-                                <Col>Squad</Col>
-                            </Row>
+                            <h1 className="username">{user.username}</h1>
                         </Col>
                     </Row>
                 </Grid>

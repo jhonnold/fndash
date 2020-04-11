@@ -50,20 +50,24 @@ const Home = () => {
 
     return (
         <main>
-            <Card title="Tracked Players">
-                <SearchUser />
-            </Card>
-            <Card title="Recent Games">
-                {games ? (
-                    renderGames()
-                ) : (
-                    <Col xs={12}>
-                        <Row center="xs">
-                            <BarLoader color={colors.lightGreen} />
-                        </Row>
-                    </Col>
-                )}
-            </Card>
+            <Row>
+                <Col xs={12} sm={10} smOffset={1} md={8} mdOffset={2} lg={6} lgOffset={3}>
+                    <Card title="Tracked Players">
+                        <SearchUser />
+                    </Card>
+                    <Card title="Recent Games">
+                        {games ? (
+                            renderGames()
+                        ) : (
+                            <Col>
+                                <Row center="xs">
+                                    <BarLoader color={colors.lightGreen} />
+                                </Row>
+                            </Col>
+                        )}
+                    </Card>
+                </Col>
+            </Row>
         </main>
     );
 };

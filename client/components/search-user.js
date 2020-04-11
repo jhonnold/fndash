@@ -65,7 +65,7 @@ const selectStyles = {
         cursor: 'pointer',
         color: colors.offWhite,
         '&:hover': {
-            color: colors.primary,
+            color: colors.lightGreen,
         },
     }),
 };
