@@ -1,0 +1,17 @@
+module.exports = {
+    primary: '#2B2E3D',
+    secondary: '#343F56',
+    darkPrimary: '#272937',
+    white: '#fafafa',
+    offWhite: '#91A6B5',
+    blue: '#6D80FE',
+    lightBlue: '#2ACAFD',
+    pink: '#FF6C88',
+    peach: '#FF998B',
+    turqoise: '#0BB4E3',
+    lightGreen: '#27EEA0',
+    purple: '#6F7CFF',
+    magenta: '#FA83ED',
+    yellow: '#ffd835',
+    orange: '#fda549',
+};

@@ -12,7 +12,9 @@ const Banner = () => (
                         <img src={logo} alt="FN Dash" style={{ height: 200 }} />
                     </Link>
                 </Col>
-                <Col xs={12}>{/* <h5>Detailed Fortnite Stat Tracking</h5> */}</Col>
+                <Col xs={12}>
+                    <h5>Detailed Fortnite Stat Tracking</h5>
+                </Col>
                 <Col tagName="hr" xs={12} />
                 <Col xs={12} tagName="nav">
                     <Row tagName="ul" around="xs">

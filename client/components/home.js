@@ -2,12 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { Row, Col, Grid } from 'react-flexbox-grid';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { BarLoader } from 'react-spinners';
 import moment from 'moment';
-import Card from '../components/card';
+import Card from './card';
+import SearchUser from './search-user';
 import getIconForPlacement from '../util/icon-for-placement';
+import colors from '../util/colors';
 
-const RecentGames = () => {
-    const [games, setGames] = useState([]);
+const Home = () => {
+    const [games, setGames] = useState(null);
 
     useEffect(() => {
         (async () => {
@@ -30,7 +33,8 @@ const RecentGames = () => {
                             <h5>{g.stat.input.user.username}</h5>
                         </Row>
                         <Row>
-                            <label>Played {moment(g.timePlayed).fromNow()}</label>
+                            {/* See game-service.js */}
+                            <label>Played {moment(g.timePlayed).from('2019-08-25 08:00:00.000Z')}</label>
                         </Row>
                         <Row between="xs" bottom="xs" style={{ marginTop: 20 }}>
                             <span>
@@ -46,9 +50,22 @@ const RecentGames = () => {
 
     return (
         <main>
-            <Card title="Recent Games">{renderGames()}</Card>
+            <Card title="Tracked Players">
+                <SearchUser />
+            </Card>
+            <Card title="Recent Games">
+                {games ? (
+                    renderGames()
+                ) : (
+                    <Col xs={12}>
+                        <Row center="xs">
+                            <BarLoader color={colors.lightGreen} />
+                        </Row>
+                    </Col>
+                )}
+            </Card>
         </main>
     );
 };
 
-export default RecentGames;
+export default Home;
