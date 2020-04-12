@@ -12,6 +12,15 @@ router.get('/', async (req, res) => {
     return res.json(games);
 });
 
+router.get('/records', async (req, res) => {
+    const { inputId } = req.query;
+    if (!inputId) return res.sendStatus(400);
+
+    const games = await gameService.getRecordsFor({ inputId });
+
+    return res.json(games);
+});
+
 router.get('/recent', async (_, res) => {
     const games = await gameService.getRecent();
 

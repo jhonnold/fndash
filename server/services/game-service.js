@@ -1,6 +1,9 @@
 const { Op } = require('sequelize');
 const db = require('../db');
 
+const IMPORTANT_STAT_NAMES = ['showdownalt', 'default', 'showdown', 'showdowntournament'];
+const IMPORTANT_STAT_MODES = ['solo', 'duo', 'trios', 'squad'];
+
 class GameService {
     getAllFor = ({ inputId }) =>
         db.Game.findAll({
@@ -20,6 +23,35 @@ class GameService {
                 },
             },
         });
+
+    getRecordsFor = async ({ inputId }) => {
+        const results = await Promise.all(
+            IMPORTANT_STAT_MODES.map(mode =>
+                db.Game.findOne({
+                    order: [['kills', 'DESC']],
+                    include: {
+                        required: true,
+                        model: db.Stat,
+                        as: 'stat',
+                        where: { name: { [Op.in]: IMPORTANT_STAT_NAMES }, mode },
+                        include: {
+                            required: true,
+                            model: db.Input,
+                            as: 'input',
+                            where: { id: inputId },
+                            include: {
+                                required: true,
+                                model: db.User,
+                                as: 'user',
+                            },
+                        },
+                    },
+                })
+            )
+        );
+
+        return results.filter(Boolean);
+    };
 
     getRecent = () =>
         db.Game.findAll({

@@ -30,6 +30,7 @@ const UserPage = props => {
         (async () => {
             if (!input.id) return;
 
+            setGames([]);
             const res = await fetch(`/api/games?inputId=${input.id}`);
             const data = await res.json();
 
@@ -64,7 +65,7 @@ const UserPage = props => {
             <Grid>
                 <Row>
                     <Col xs={12} sm={6}>
-                        <Records games={games} />
+                        <Records inputId={input.id} />
                         <Games games={games} />
                     </Col>
                     <Col xs={12} sm={6}>

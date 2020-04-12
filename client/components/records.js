@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Col, Row, Grid } from 'react-flexbox-grid';
+import { BarLoader } from 'react-spinners';
 import _groupBy from 'lodash/groupBy';
 import _maxBy from 'lodash/maxBy';
 import _includes from 'lodash/includes';
@@ -9,18 +10,27 @@ import _pick from 'lodash/pick';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import moment from 'moment';
 import getIconForPlacement from '../util/icon-for-placement';
+import colors from '../util/colors';
 import Card from './card';
 
-const Records = ({ games }) => {
-    const gamesByMode = _pick(_groupBy(games, 'stat.mode'), ['solo', 'duo', 'trios', 'squad']);
-    const records = _transform(gamesByMode, (r, v, k) => (r[k] = _maxBy(v, 'kills')), {});
+const Records = ({ inputId }) => {
+    const [records, setRecords] = useState(null);
+
+    useEffect(() => {
+        (async () => {
+            if (!inputId) return;
+
+            const res = await fetch(`/api/games/records?inputId=${inputId}`);
+            const data = await res.json();
+
+            setRecords(data);
+        })();
+    }, [inputId]);
 
     return (
         <Card title="Records">
-            {_keys(records).map(k => {
-                const g = records[k];
-
-                return (
+            {records ? (
+                records.map(g => (
                     <Col xs={12} key={g.id} className="recent-game">
                         <Grid>
                             <Row between="xs" middle="xs">
@@ -45,8 +55,14 @@ const Records = ({ games }) => {
                             </Row>
                         </Grid>
                     </Col>
-                );
-            })}
+                ))
+            ) : (
+                <Col>
+                    <Row center="xs">
+                        <BarLoader color={colors.lightGreen} />
+                    </Row>
+                </Col>
+            )}
         </Card>
     );
 };
