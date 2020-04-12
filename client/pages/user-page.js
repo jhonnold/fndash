@@ -26,18 +26,6 @@ const UserPage = props => {
         })();
     }, [userId]);
 
-    useEffect(() => {
-        (async () => {
-            if (!input.id) return;
-
-            setGames([]);
-            const res = await fetch(`/api/games?inputId=${input.id}`);
-            const data = await res.json();
-
-            setGames(data);
-        })();
-    }, [input.id]);
-
     return (
         <>
             <Helmet>
@@ -55,18 +43,18 @@ const UserPage = props => {
                             <SearchUser />
                         </Col>
                     </Row>
-                    <Row between="xs" bottom="xs">
+                    <Row center="xs" bottom="xs">
                         <Col>
                             <h1 className="username">{user.username}</h1>
                         </Col>
                     </Row>
                 </Grid>
             </Grid>
-            <Grid>
+            <Grid style={{ padding: '0 2rem' }}>
                 <Row>
                     <Col xs={12} sm={6}>
                         <Records inputId={input.id} />
-                        <Games games={games} />
+                        <Games inputId={input.id} />
                     </Col>
                     <Col xs={12} sm={6}>
                         <DailyKD games={games} />

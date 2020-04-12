@@ -1,12 +1,15 @@
 const { Op } = require('sequelize');
 const db = require('../db');
 
+const PAGE_SIZE = 20;
 const IMPORTANT_STAT_NAMES = ['showdownalt', 'default', 'showdown', 'showdowntournament'];
 const IMPORTANT_STAT_MODES = ['solo', 'duo', 'trios', 'squad'];
 
 class GameService {
-    getAllFor = ({ inputId }) =>
-        db.Game.findAll({
+    getAllFor = ({ inputId, page = 1 }) =>
+        db.Game.findAndCountAll({
+            limit: PAGE_SIZE,
+            offset: (page - 1) * PAGE_SIZE,
             order: [['timePlayed', 'DESC']],
             include: {
                 required: true,
