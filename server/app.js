@@ -14,6 +14,7 @@ app.use(express.static(path.join(__dirname, '../dist')));
 
 app.use('/api/users', require('./routes/users'));
 app.use('/api/games', require('./routes/games'));
+app.use('/api/inputs', require('./routes/inputs'));
 
 app.use('*', (_, res) => res.sendFile(path.join(__dirname, '../dist', 'index.html')));
 
