@@ -25,10 +25,6 @@ module.exports = (sequelize, DataTypes) => {
                 type: DataTypes.INTEGER,
                 field: 'minutesplayed',
             },
-            placements: {
-                type: DataTypes.JSONB,
-                field: 'placements',
-            },
         },
         {
             tableName: 'stat',
@@ -45,6 +41,11 @@ module.exports = (sequelize, DataTypes) => {
         db.Stat.hasMany(db.Game, {
             foreignKey: 'statId',
             as: 'games',
+        });
+
+        db.Stat.hasMany(db.Game, {
+            foreignKey: 'statId',
+            as: 'placements',
         });
     };
 

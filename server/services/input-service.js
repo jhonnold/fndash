@@ -81,6 +81,37 @@ class InputService {
 
         return dailyStats.map(s => ({ ...s, kd: s.kills / Math.max(1, s.matches - s.wins) }));
     };
+
+    getInputPlacements = async ({ id }) => {
+        const placements = await db.StatPlacement.findAll({
+            raw: true,
+            attributes: [
+                [db.sequelize.col('stat.mode'), 'mode'],
+                'placement',
+                [db.sequelize.fn('sum', db.sequelize.col('StatPlacement.count')), 'count'],
+            ],
+            group: [db.sequelize.col('stat.mode'), 'placement'],
+            include: {
+                attributes: [],
+                required: true,
+                model: db.Stat,
+                as: 'stat',
+                where: {
+                    name: { [Op.in]: IMPORTANT_STAT_NAMES },
+                    mode: { [Op.in]: IMPORTANT_STAT_MODES },
+                },
+                include: {
+                    attributes: [],
+                    required: true,
+                    model: db.Input,
+                    as: 'input',
+                    where: { id },
+                },
+            },
+        });
+
+        return placements;
+    };
 }
 
 module.exports = new InputService();

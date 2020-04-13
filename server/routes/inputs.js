@@ -19,4 +19,12 @@ router.get('/:id/daily-stats', async (req, res) => {
     return res.json(dailyStats);
 });
 
+router.get('/:id/placements', async (req, res) => {
+    const { id } = req.params;
+
+    const placements = await inputService.getInputPlacements({ id });
+
+    return res.json(placements);
+});
+
 module.exports = router;
