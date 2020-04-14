@@ -50,15 +50,28 @@ const UserPage = props => {
                     </Row>
                 </Grid>
             </Grid>
-            <Grid style={{ padding: '0 2rem' }}>
+            <Grid>
                 <Row>
-                    <Col xs={12} sm={6}>
-                        <Records inputId={input.id} />
-                        <Games inputId={input.id} />
+                    <Col xs={12} md={6}>
+                        <Grid>
+                            <Row>
+                                <Col xs={12}>
+                                    <Records inputId={input.id} />
+                                </Col>
+                                <Col xs={12}>
+                                    <Games inputId={input.id} />
+                                </Col>
+                            </Row>
+                        </Grid>
                     </Col>
-                    <Col xs={12} sm={6}>
-                        <DailyKD games={games} />
-                        <DailyGameCount games={games} />
+                    <Col xs={12} md={6}>
+                        <Grid>
+                            <Row>
+                                <Col xs={12}>
+                                    <DailyGameCount inputId={input.id} />
+                                </Col>
+                            </Row>
+                        </Grid>
                     </Col>
                 </Row>
             </Grid>
