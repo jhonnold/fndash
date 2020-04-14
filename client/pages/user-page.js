@@ -68,6 +68,9 @@ const UserPage = props => {
                         <Grid>
                             <Row>
                                 <Col xs={12}>
+                                    <DailyKD inputId={input.id} />
+                                </Col>
+                                <Col xs={12}>
                                     <DailyGameCount inputId={input.id} />
                                 </Col>
                             </Row>

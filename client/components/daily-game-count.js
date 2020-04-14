@@ -10,7 +10,7 @@ const chartOptions = {
     responsive: true,
     aspectRatio: 2.5,
     legend: {
-        display: true,
+        display: false,
         position: 'bottom',
         labels: {
             fontColor: colors.offWhite,
@@ -65,9 +65,11 @@ const DailyGameCount = ({ inputId }) => {
         gradient.addColorStop(0, colors.lightBlue);
         gradient.addColorStop(1, colors.lightGreen);
 
+        const validData = data.slice(data.length - 7);
+
         return {
-            datasets: [{ data: data.map(d => +d.matches), backgroundColor: gradient }],
-            labels: data.map(d => moment(d.day).format('MMM DD')),
+            datasets: [{ data: validData.map(d => +d.matches), backgroundColor: gradient, label: 'Daily Games' }],
+            labels: validData.map(d => moment(d.day).format('MMM DD')),
         };
     };
 
