@@ -4,11 +4,13 @@ import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import _get from 'lodash/get';
 import logo from '../assets/img/horizontal-logo.png';
+import UserStat from '../components/user-stat';
 import SearchUser from '../components/search-user';
 import Records from '../components/records';
 import Games from '../components/games';
 import DailyKD from '../components/daily-kd';
 import DailyGameCount from '../components/daily-game-count';
+import UserStats from '../components/user-stat';
 
 const UserPage = props => {
     const [user, setUser] = useState({});
@@ -51,6 +53,7 @@ const UserPage = props => {
                 </Grid>
             </Grid>
             <Grid>
+                <UserStats inputId={input.id} />
                 <Row>
                     <Col xs={12} md={6}>
                         <Grid>
