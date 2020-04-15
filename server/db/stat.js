@@ -42,11 +42,6 @@ module.exports = (sequelize, DataTypes) => {
             foreignKey: 'statId',
             as: 'games',
         });
-
-        db.Stat.hasMany(db.Game, {
-            foreignKey: 'statId',
-            as: 'placements',
-        });
     };
 
     return Stat;

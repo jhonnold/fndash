@@ -4,8 +4,6 @@ const db = require('../db');
 const IMPORTANT_STAT_NAMES = ['showdownalt', 'default', 'showdown', 'showdowntournament'];
 const IMPORTANT_STAT_MODES = ['solo', 'duo', 'trios', 'squad'];
 
-const PLACEMENT_REGEX = /placetop([\d]+)/gi;
-
 class InputService {
     getInputStats = async ({ id }) => {
         const stats = await db.Game.findOne({
@@ -83,12 +81,12 @@ class InputService {
     };
 
     getInputPlacements = async ({ id }) => {
-        const placements = await db.StatPlacement.findAll({
+        const placements = await db.Game.findAll({
             raw: true,
             attributes: [
                 [db.sequelize.col('stat.mode'), 'mode'],
                 'placement',
-                [db.sequelize.fn('sum', db.sequelize.col('StatPlacement.count')), 'count'],
+                [db.sequelize.fn('count', db.sequelize.col('Game.placement')), 'count'],
             ],
             group: [db.sequelize.col('stat.mode'), 'placement'],
             include: {

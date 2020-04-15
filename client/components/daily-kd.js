@@ -61,14 +61,29 @@ const DailyKD = ({ inputId }) => {
         if (!data) return null;
 
         const ctx = canvas.getContext('2d');
-        const gradient = ctx.createLinearGradient(0, 0, 400, 0);
-        gradient.addColorStop(0, colors.lightBlue);
-        gradient.addColorStop(1, colors.lightGreen);
+        const lineGradient = ctx.createLinearGradient(0, 0, 400, 0);
+        lineGradient.addColorStop(0, colors.lightBlue);
+        lineGradient.addColorStop(1, colors.lightGreen);
+
+        const fillGradient = ctx.createLinearGradient(0, 0, 400, 0);
+        fillGradient.addColorStop(0, `${colors.lightBlue}40`);
+        fillGradient.addColorStop(1, `${colors.lightGreen}40`);
 
         const validData = data.slice(data.length - 7);
 
         return {
-            datasets: [{ data: validData.map(d => +d.kd), backgroundColor: gradient, label: 'Daily K/D' }],
+            datasets: [
+                {
+                    data: validData.map(d => +d.kd),
+                    backgroundColor: fillGradient,
+                    pointBackgroundColor: lineGradient,
+                    pointRadius: 4,
+                    label: 'Daily K/D',
+                    fill: true,
+                    borderColor: lineGradient,
+                    borderWidth: 2,
+                },
+            ],
             labels: validData.map(d => moment(d.day).format('MMM DD')),
         };
     };
