@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Row, Col, Grid } from 'react-flexbox-grid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrophy, faGamepad, faSkull, faCrosshairs, faCross } from '@fortawesome/free-solid-svg-icons';
+import useFetch from '../util/use-fetch';
 import Card from './card';
 
 const Stat = ({ title, icon, value }) => (
@@ -21,20 +22,10 @@ const Stat = ({ title, icon, value }) => (
 );
 
 const UserStats = ({ inputId }) => {
-    const [stats, setStats] = useState(null);
+    const res = useFetch(`/api/inputs/${inputId}/stats`);
 
-    useEffect(() => {
-        (async () => {
-            if (!inputId) return;
-
-            const res = await fetch(`/api/inputs/${inputId}/stats`);
-            const data = await res.json();
-
-            setStats(data);
-        })();
-    }, [inputId]);
-
-    if (!stats) return null;
+    if (res.loading || res.error) return null;
+    const { body: stats } = res;
 
     return (
         <Row>
@@ -60,6 +51,6 @@ const UserStats = ({ inputId }) => {
             </Col>
         </Row>
     );
-}
+};
 
 export default UserStats;
