@@ -9,6 +9,7 @@ const isDev = process.env.NODE_ENV !== 'production';
 module.exports = {
     devServer: {
         disableHostCheck: true,
+        port: 8081,
         proxy: {
             '/api': 'http://localhost:8080',
         },
