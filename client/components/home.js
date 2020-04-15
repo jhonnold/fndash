@@ -1,27 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Row, Col, Grid } from 'react-flexbox-grid';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { BarLoader } from 'react-spinners';
 import moment from 'moment';
+import useFetch from '../util/use-fetch';
 import Card from './card';
 import SearchUser from './search-user';
 import getIconForPlacement from '../util/icon-for-placement';
 import colors from '../util/colors';
 
 const Home = () => {
-    const [games, setGames] = useState(null);
+    const res = useFetch('/api/games/recent');
 
-    useEffect(() => {
-        (async () => {
-            const res = await fetch('/api/games/recent');
-            const data = await res.json();
-
-            setGames(data);
-        })();
-    }, []);
-
-    const renderGames = () =>
+    const renderGames = games =>
         games.map(g => (
             <Col xs={12} key={g.id} className="recent-game">
                 <Link to={`/users/${g.stat.input.user.id}`}>
@@ -56,14 +48,20 @@ const Home = () => {
                         <SearchUser />
                     </Card>
                     <Card title="Recent Games">
-                        {games ? (
-                            renderGames()
-                        ) : (
+                        {res.loading ? (
                             <Col>
                                 <Row center="xs">
                                     <BarLoader color={colors.lightGreen} />
                                 </Row>
                             </Col>
+                        ) : res.error ? (
+                            <Col xs={12}>
+                                <Row center="xs">
+                                    <h4 style={{ color: colors.pink, margin: 0 }}>Unable to load recent games!</h4>
+                                </Row>
+                            </Col>
+                        ) : (
+                            renderGames(res.body)
                         )}
                     </Card>
                 </Col>
