@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Row, Col, Grid } from 'react-flexbox-grid';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import _get from 'lodash/get';
+import useFetch from '../util/use-fetch';
 import logo from '../assets/img/horizontal-logo.png';
 import SearchUser from '../components/search-user';
 import Records from '../components/records';
@@ -13,20 +14,11 @@ import UserStats from '../components/user-stat';
 import Placements from '../components/placements';
 
 const UserPage = props => {
-    const [user, setUser] = useState({});
-    const [games, setGames] = useState([]);
-    const input = _get(user, ['inputs', 0], {});
-
     const { userId } = props.match.params;
+    const res = useFetch(`/api/users/${userId}`);
 
-    useEffect(() => {
-        (async () => {
-            const res = await fetch(`/api/users/${userId}`);
-            const data = await res.json();
-
-            setUser(data);
-        })();
-    }, [userId]);
+    const user = _get(res, ['body']) || {};
+    const input = _get(user, ['inputs', 0], {});
 
     return (
         <>
@@ -52,38 +44,40 @@ const UserPage = props => {
                     </Row>
                 </Grid>
             </Grid>
-            <Grid>
-                <UserStats inputId={input.id} />
-                <Row>
-                    <Col xs={12} md={6}>
-                        <Grid>
-                            <Row>
-                                <Col xs={12}>
-                                    <Records inputId={input.id} />
-                                </Col>
-                                <Col xs={12}>
-                                    <Games inputId={input.id} />
-                                </Col>
-                            </Row>
-                        </Grid>
-                    </Col>
-                    <Col xs={12} md={6}>
-                        <Grid>
-                            <Row>
-                                <Col xs={12}>
-                                    <DailyKD inputId={input.id} />
-                                </Col>
-                                <Col xs={12}>
-                                    <DailyGameCount inputId={input.id} />
-                                </Col>
-                                <Col xs={12}>
-                                    <Placements inputId={input.id} />
-                                </Col>
-                            </Row>
-                        </Grid>
-                    </Col>
-                </Row>
-            </Grid>
+            {input.id && (
+                <Grid>
+                    <UserStats inputId={input.id} />
+                    <Row>
+                        <Col xs={12} md={6}>
+                            <Grid>
+                                <Row>
+                                    <Col xs={12}>
+                                        <Records inputId={input.id} />
+                                    </Col>
+                                    <Col xs={12}>
+                                        <Games inputId={input.id} />
+                                    </Col>
+                                </Row>
+                            </Grid>
+                        </Col>
+                        <Col xs={12} md={6}>
+                            <Grid>
+                                <Row>
+                                    <Col xs={12}>
+                                        <DailyKD inputId={input.id} />
+                                    </Col>
+                                    <Col xs={12}>
+                                        <DailyGameCount inputId={input.id} />
+                                    </Col>
+                                    <Col xs={12}>
+                                        <Placements inputId={input.id} />
+                                    </Col>
+                                </Row>
+                            </Grid>
+                        </Col>
+                    </Row>
+                </Grid>
+            )}
         </>
     );
 };

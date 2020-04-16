@@ -2,18 +2,18 @@ import React from 'react';
 import { Row, Col, Grid } from 'react-flexbox-grid';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { BarLoader } from 'react-spinners';
 import moment from 'moment';
+import Error from './error';
 import useFetch from '../util/use-fetch';
 import Card from './card';
 import SearchUser from './search-user';
 import getIconForPlacement from '../util/icon-for-placement';
-import colors from '../util/colors';
 
 const Home = () => {
     const res = useFetch('/api/games/recent');
 
     const renderGames = games =>
+        games &&
         games.map(g => (
             <Col xs={12} key={g.id} className="recent-game">
                 <Link to={`/users/${g.stat.input.user.id}`}>
@@ -47,18 +47,10 @@ const Home = () => {
                     <Card title="Tracked Players">
                         <SearchUser />
                     </Card>
-                    <Card title="Recent Games">
-                        {res.loading ? (
-                            <Col>
-                                <Row center="xs">
-                                    <BarLoader color={colors.lightGreen} />
-                                </Row>
-                            </Col>
-                        ) : res.error ? (
+                    <Card title="Recent Games" loading={res.loading}>
+                        {res.error ? (
                             <Col xs={12}>
-                                <Row center="xs">
-                                    <h4 style={{ color: colors.pink, margin: 0 }}>Unable to load recent games!</h4>
-                                </Row>
+                                <Error message="Unable to load recent games!" />
                             </Col>
                         ) : (
                             renderGames(res.body)

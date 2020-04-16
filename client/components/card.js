@@ -1,7 +1,9 @@
 import React from 'react';
-import { Row } from 'react-flexbox-grid';
+import { Row, Col } from 'react-flexbox-grid';
+import { BarLoader } from 'react-spinners';
+import colors from '../util/colors';
 
-const Card = ({ title, style, children }) => (
+const Card = ({ title, style, children, loading }) => (
     <>
         {title && (
             <Row>
@@ -9,7 +11,15 @@ const Card = ({ title, style, children }) => (
             </Row>
         )}
         <Row style={style} className="card">
-            {children}
+            {loading ? (
+                <Col xs={12}>
+                    <Row center="xs">
+                        <BarLoader color={colors.lightGreen} />
+                    </Row>
+                </Col>
+            ) : (
+                children
+            )}
         </Row>
     </>
 );

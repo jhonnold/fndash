@@ -1,36 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Col, Row, Grid } from 'react-flexbox-grid';
-import { BarLoader } from 'react-spinners';
-import _groupBy from 'lodash/groupBy';
-import _maxBy from 'lodash/maxBy';
-import _includes from 'lodash/includes';
-import _transform from 'lodash/transform';
-import _keys from 'lodash/keys';
-import _pick from 'lodash/pick';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import moment from 'moment';
+import Error from './error';
+import useFetch from '../util/use-fetch';
 import getIconForPlacement from '../util/icon-for-placement';
-import colors from '../util/colors';
 import Card from './card';
 
 const Records = ({ inputId }) => {
-    const [records, setRecords] = useState(null);
-
-    useEffect(() => {
-        (async () => {
-            if (!inputId) return;
-
-            const res = await fetch(`/api/games/records?inputId=${inputId}`);
-            const data = await res.json();
-
-            setRecords(data);
-        })();
-    }, [inputId]);
+    const res = useFetch(`/api/games/records?inputId=${inputId}`);
 
     return (
-        <Card title="Records">
-            {records ? (
-                records.map(g => (
+        <Card title="Records" loading={res.loading}>
+            {res.error ? (
+                <Col xs={12}>
+                    <Error message="Unable to load records!" />
+                </Col>
+            ) : (
+                res.body &&
+                res.body.map(g => (
                     <Col xs={12} key={g.id} className="recent-game">
                         <Grid>
                             <Row between="xs" middle="xs">
@@ -56,12 +44,6 @@ const Records = ({ inputId }) => {
                         </Grid>
                     </Col>
                 ))
-            ) : (
-                <Col>
-                    <Row center="xs">
-                        <BarLoader color={colors.lightGreen} />
-                    </Row>
-                </Col>
             )}
         </Card>
     );

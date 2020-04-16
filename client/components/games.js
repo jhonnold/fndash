@@ -1,31 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Row, Col, Grid } from 'react-flexbox-grid';
-import { BarLoader } from 'react-spinners';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import _slice from 'lodash/slice';
 import moment from 'moment';
+import Error from './error';
+import useFetch from '../util/use-fetch';
 import Card from './card';
 import getIconForPlacement from '../util/icon-for-placement';
-import colors from '../util/colors';
 
 const Games = ({ inputId }) => {
-    const [gameInfo, setGameInfo] = useState(null);
-
-    useEffect(() => {
-        (async () => {
-            if (!inputId) return;
-
-            const res = await fetch(`/api/games?inputId=${inputId}`);
-            const data = await res.json();
-
-            setGameInfo(data);
-        })();
-    }, [inputId]);
+    const res = useFetch(`/api/games?inputId=${inputId}`);
 
     return (
-        <Card title="Games" style={{ maxHeight: '41.75rem', overflow: 'auto' }}>
-            {gameInfo ? (
-                gameInfo.games.map(g => (
+        <Card title="Games" style={{ maxHeight: '41.75rem', overflow: 'auto' }} loading={res.loading}>
+            {res.error ? (
+                <Col xs={12}>
+                    <Error message="Unable to load games!" />
+                </Col>
+            ) : (
+                res.body &&
+                res.body.games.map(g => (
                     <Col xs={12} key={g.id} className="recent-game">
                         <Grid>
                             <Row between="xs" middle="xs">
@@ -51,12 +44,6 @@ const Games = ({ inputId }) => {
                         </Grid>
                     </Col>
                 ))
-            ) : (
-                <Col>
-                    <Row center="xs">
-                        <BarLoader color={colors.lightGreen} />
-                    </Row>
-                </Col>
             )}
         </Card>
     );
