@@ -47,7 +47,7 @@ const Home = () => {
                     <Card title="Tracked Players">
                         <SearchUser />
                     </Card>
-                    <Card title="Recent Games" loading={res.loading}>
+                    <Card title="Recent Games" loading={res.loading} style={{ maxHeight: '42rem', overflow: 'auto' }}>
                         {res.error ? (
                             <Col xs={12}>
                                 <Error message="Unable to load recent games!" />

@@ -110,7 +110,8 @@ a {
     }
 }
 
-.banner, .footer {
+.banner,
+.footer {
     background-color: $primary;
 }
 
@@ -119,8 +120,8 @@ a {
     text-align: center;
     font-size: 0.9375rem;
 
-    h5 { 
-        margin: 1rem 0; 
+    h5 {
+        margin: 1rem 0;
     }
 
     .github-link {
@@ -147,10 +148,6 @@ h1.username {
     padding: 1rem;
     border-radius: 0.25rem;
     background-color: darken($primary, 2%);
-
-    &:last-of-type {
-        margin-bottom: 0;
-    }
 
     label {
         color: $offWhite;
