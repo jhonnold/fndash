@@ -58,6 +58,10 @@ p {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+
+    .main {
+        flex: 1;
+    }
 }
 
 h3 {
@@ -106,8 +110,22 @@ a {
     }
 }
 
-.banner {
+.banner, .footer {
     background-color: $primary;
+}
+
+.footer {
+    padding: 1rem;
+    text-align: center;
+    font-size: 0.9375rem;
+
+    h5 { 
+        margin: 1rem 0; 
+    }
+
+    .github-link {
+        color: $offWhite;
+    }
 }
 
 .card {

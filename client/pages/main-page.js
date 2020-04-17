@@ -13,7 +13,7 @@ const MainPage = () => (
             <title>FN Dash</title>
         </Helmet>
         <Banner />
-        <Grid>
+        <Grid className="main">
             <Switch>
                 <Route path="/signup" component={SignUp} />
                 <Route path="/about" component={About} />

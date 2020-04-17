@@ -44,8 +44,8 @@ const UserPage = props => {
                     </Row>
                 </Grid>
             </Grid>
-            {input.id && (
-                <Grid>
+            <Grid className="main">
+                {input.id && (<>
                     <UserStats inputId={input.id} />
                     <Row>
                         <Col xs={12} md={6}>
@@ -76,8 +76,8 @@ const UserPage = props => {
                             </Grid>
                         </Col>
                     </Row>
-                </Grid>
-            )}
+                </>)}
+            </Grid>
         </>
     );
 };
