@@ -13,8 +13,8 @@ class InputService {
                 [db.sequelize.fn('sum', db.sequelize.col('Game.kills')), 'kills'],
                 [
                     db.sequelize.fn(
-                        'sum',
-                        db.sequelize.literal('case when "placement" = \'Victory\' then 1 else 0 end')
+                        'count',
+                        db.sequelize.literal('case when "placement" = \'Victory\' then 1 else null end')
                     ),
                     'wins',
                 ],
@@ -38,7 +38,7 @@ class InputService {
             },
         });
 
-        return { ...stats, kd: stats.kills / Math.max(1, stats.matches - stats.wins) };
+        return { ...stats, kills: stats.kills || 0, kd: stats.kills / Math.max(1, stats.matches - stats.wins) };
     };
 
     getDailyStats = async ({ id }) => {

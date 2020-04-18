@@ -149,6 +149,10 @@ h1.username {
     border-radius: 0.25rem;
     background-color: darken($primary, 2%);
 
+    &:last-of-type {
+        margin-bottom: 0;
+    }
+
     label {
         color: $offWhite;
         font-size: 0.75rem;

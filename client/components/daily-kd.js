@@ -15,8 +15,10 @@ const DailyKD = ({ inputId }) => {
                 <Col xs={12}>
                     <Error message="Unable to load K/D data!" />
                 </Col>
-            ) : (
+            ) : res.body && res.body.length ? (
                 <Line data={chartData(res.body)} options={chartOptions} />
+            ) : (
+                <p className="text-off-white">No games recorded!</p>
             )}
         </Card>
     );

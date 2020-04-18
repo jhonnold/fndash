@@ -20,7 +20,9 @@ const UserPage = props => {
     const [user, setUser] = useState({});
     const [input, setInput] = useState({});
 
-    const inputs = (_get(user, ['inputs']) || []).map(i => ({ value: i.id, label: inputTypes[i.inputType] }));
+    const inputs = _get(user, ['inputs'], [])
+        .filter(i => i.inputType !== 'bestscore')
+        .map(i => ({ value: i.id, label: inputTypes[i.inputType] }));
 
     useEffect(() => {
         const loadUser = async () => {
@@ -73,7 +75,7 @@ const UserPage = props => {
                                     placeholder="Select an input..."
                                     options={inputs}
                                     value={input}
-                                    onChange={o => setInput(o)}
+                                    onChange={setInput}
                                 />
                             </Col>
                         )}

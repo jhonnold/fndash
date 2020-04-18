@@ -16,8 +16,7 @@ const Games = ({ inputId }) => {
                 <Col xs={12}>
                     <Error message="Unable to load games!" />
                 </Col>
-            ) : (
-                res.body &&
+            ) : res.body && res.body.games.length ? (
                 res.body.games.map(g => (
                     <Col xs={12} key={g.id} className="recent-game">
                         <Grid>
@@ -44,6 +43,8 @@ const Games = ({ inputId }) => {
                         </Grid>
                     </Col>
                 ))
+            ) : (
+                <p className="text-off-white">No games recoreded!</p>
             )}
         </Card>
     );

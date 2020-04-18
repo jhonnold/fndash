@@ -15,8 +15,10 @@ const DailyGameCount = ({ inputId }) => {
                 <Col xs={12}>
                     <Error message="Unable to load games played!" />
                 </Col>
-            ) : (
+            ) : res.body && res.body.length ? (
                 <Bar data={chartData(res.body)} options={chartOptions} />
+            ) : (
+                <p className="text-off-white">No games recorded!</p>
             )}
         </Card>
     );

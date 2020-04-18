@@ -15,8 +15,10 @@ const Placements = ({ inputId }) => {
                 <Col xs={12}>
                     <Error message="Unable to load placements data!" />
                 </Col>
-            ) : (
+            ) : res.body && res.body.length ? (
                 <Pie data={chartData(res.body)} options={chartOptions} />
+            ) : (
+                <p className="text-off-white">No games recorded!</p>
             )}
         </Card>
     );
