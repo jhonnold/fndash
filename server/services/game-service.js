@@ -5,34 +5,42 @@ const { IMPORTANT_MODES } = require('../db/stat');
 const PAGE_SIZE = 20;
 
 class GameService {
-    getAllFor = ({ inputId, page = 1 }) =>
-        db.game.findAndCountAll({
+    getAllFor = ({ inputId, mode, page = 1 }) => {
+        const statWhere = {};
+        if (mode) statWhere.mode = mode;
+
+        return db.game.findAndCountAll({
             limit: PAGE_SIZE,
             offset: (page - 1) * PAGE_SIZE,
             order: [['timePlayed', 'DESC']],
             include: {
                 required: true,
                 model: db.stat,
+                where: statWhere,
                 include: {
                     required: true,
                     model: db.input,
-                    where: {
-                        id: inputId,
+                    where: { id: inputId },
+                    include: {
+                        model: db.user,
+                        required: true,
                     },
-                    include: 'user',
                 },
             },
         });
+    };
 
-    getRecordsFor = async ({ inputId }) => {
+    getRecordsFor = async ({ inputId, mode }) => {
+        const modes = mode ? [mode] : IMPORTANT_MODES;
+
         const results = await Promise.all(
-            IMPORTANT_MODES.map(mode =>
+            modes.map(m =>
                 db.game.findOne({
                     order: [['kills', 'DESC']],
                     include: {
                         required: true,
                         model: db.stat,
-                        where: { mode },
+                        where: { mode: m },
                         include: {
                             required: true,
                             model: db.input,

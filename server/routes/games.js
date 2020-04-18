@@ -4,10 +4,10 @@ const gameService = require('../services/game-service');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-    const { inputId, page } = req.query;
+    const { inputId, page, mode } = req.query;
     if (!inputId) return res.sendStatus(400);
 
-    const results = await gameService.getAllFor({ inputId, page });
+    const results = await gameService.getAllFor({ inputId, mode, page });
 
     return res.json({
         page: page || 1,
@@ -17,10 +17,10 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/records', async (req, res) => {
-    const { inputId } = req.query;
+    const { inputId, mode } = req.query;
     if (!inputId) return res.sendStatus(400);
 
-    const games = await gameService.getRecordsFor({ inputId });
+    const games = await gameService.getRecordsFor({ inputId, mode });
 
     return res.json(games);
 });

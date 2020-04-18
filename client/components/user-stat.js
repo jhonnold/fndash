@@ -2,6 +2,7 @@ import React from 'react';
 import { Row, Col, Grid } from 'react-flexbox-grid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrophy, faGamepad, faSkull, faCrosshairs, faCross } from '@fortawesome/free-solid-svg-icons';
+import qs from 'querystring';
 import useFetch from '../util/use-fetch';
 import Card from './card';
 
@@ -21,8 +22,11 @@ const Stat = ({ title, icon, value }) => (
     </Card>
 );
 
-const UserStats = ({ inputId }) => {
-    const res = useFetch(`/api/inputs/${inputId}/stats`);
+const UserStats = ({ inputId, mode }) => {
+    const params = {
+        mode: mode !== 'all' ? mode : undefined,
+    };
+    const res = useFetch(`/api/inputs/${inputId}/stats?${qs.stringify(params)}`);
 
     if (res.loading || res.error) return null;
     const { body: stats } = res;

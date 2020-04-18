@@ -1,13 +1,17 @@
 import React from 'react';
 import { Col } from 'react-flexbox-grid';
 import { Pie } from 'react-chartjs-2';
+import qs from 'querystring';
 import Error from './error';
 import useFetch from '../util/use-fetch';
 import Card from './card';
 import { chartData, chartOptions } from '../config/placements-config';
 
-const Placements = ({ inputId }) => {
-    const res = useFetch(`/api/inputs/${inputId}/placements`);
+const Placements = ({ inputId, mode }) => {
+    const params = {
+        mode: mode !== 'all' ? mode : undefined,
+    };
+    const res = useFetch(`/api/inputs/${inputId}/placements?${qs.stringify(params)}`);
 
     return (
         <Card title="Placements" loading={res.loading}>
@@ -18,8 +22,8 @@ const Placements = ({ inputId }) => {
             ) : res.body && res.body.length ? (
                 <Pie data={chartData(res.body)} options={chartOptions} />
             ) : (
-                <p className="text-off-white">No games recorded!</p>
-            )}
+                        <p className="text-off-white">No games recorded!</p>
+                    )}
         </Card>
     );
 };

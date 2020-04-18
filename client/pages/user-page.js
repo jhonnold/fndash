@@ -19,10 +19,18 @@ const UserPage = props => {
     const { userId } = props.match.params;
     const [user, setUser] = useState({});
     const [input, setInput] = useState({});
+    const [mode, setMode] = useState({ label: 'All', value: 'all' });
 
     const inputs = _get(user, ['inputs'], [])
         .filter(i => i.inputType !== 'bestscore')
         .map(i => ({ value: i.id, label: inputTypes[i.inputType] }));
+    const modes = [
+        { label: 'All', value: 'all' },
+        { label: 'Solo', value: 'solo' },
+        { label: 'Duo', value: 'duo' },
+        { label: 'Trios', value: 'trios' },
+        { label: 'Squad', value: 'squad' },
+    ];
 
     useEffect(() => {
         const loadUser = async () => {
@@ -35,8 +43,14 @@ const UserPage = props => {
             setInput({ value: firstInput.id, label: inputTypes[firstInput.inputType] });
         };
 
+        setMode({ label: 'All', value: 'all' });
         loadUser();
     }, [userId]);
+
+    const filters = {
+        inputId: input.value,
+        mode: mode.value,
+    };
 
     return (
         <>
@@ -64,21 +78,36 @@ const UserPage = props => {
                         <Col xs tagName="hr" />
                     </Row>
                     <Row>
-                        {inputs.length && (
-                            <Col xs={6} md={3}>
-                                <p className="text-off-white" style={{ marginBottom: '0.5rem' }}>
-                                    Input
-                                </p>
-                                <Select
-                                    styles={selectStyles}
-                                    isClearable={false}
-                                    placeholder="Select an input..."
-                                    options={inputs}
-                                    value={input}
-                                    onChange={setInput}
-                                />
-                            </Col>
-                        )}
+                        <Col xs={6}>
+                            {inputs.length && (
+                                <>
+                                    <p className="text-off-white" style={{ marginBottom: '0.5rem' }}>
+                                        Input
+                                    </p>
+                                    <Select
+                                        styles={selectStyles}
+                                        isClearable={false}
+                                        placeholder="Select an input..."
+                                        options={inputs}
+                                        value={input}
+                                        onChange={setInput}
+                                    />
+                                </>
+                            )}
+                        </Col>
+                        <Col xs={6}>
+                            <p className="text-off-white" style={{ marginBottom: '0.5rem' }}>
+                                Mode
+                            </p>
+                            <Select
+                                styles={selectStyles}
+                                isClearable={false}
+                                placeholder="Selet a mode..."
+                                options={modes}
+                                value={mode}
+                                onChange={setMode}
+                            />
+                        </Col>
                     </Row>
                 </Grid>
             </Grid>
@@ -86,16 +115,16 @@ const UserPage = props => {
                 <Grid>
                     {input.value && (
                         <>
-                            <UserStats inputId={input.value} />
+                            <UserStats {...filters} />
                             <Row>
                                 <Col xs={12} md={6}>
                                     <Grid>
                                         <Row>
                                             <Col xs={12}>
-                                                <Records inputId={input.value} />
+                                                <Records {...filters} />
                                             </Col>
                                             <Col xs={12}>
-                                                <Games inputId={input.value} />
+                                                <Games {...filters} />
                                             </Col>
                                         </Row>
                                     </Grid>
@@ -104,13 +133,13 @@ const UserPage = props => {
                                     <Grid>
                                         <Row>
                                             <Col xs={12}>
-                                                <DailyKD inputId={input.value} />
+                                                <DailyKD {...filters} />
                                             </Col>
                                             <Col xs={12}>
-                                                <DailyGameCount inputId={input.value} />
+                                                <DailyGameCount {...filters} />
                                             </Col>
                                             <Col xs={12}>
-                                                <Placements inputId={input.value} />
+                                                <Placements {...filters} />
                                             </Col>
                                         </Row>
                                     </Grid>

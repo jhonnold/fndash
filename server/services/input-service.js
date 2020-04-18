@@ -1,7 +1,10 @@
 const db = require('../db');
 
 class InputService {
-    getInputStats = async ({ id }) => {
+    getInputStats = async ({ id, mode }) => {
+        const statWhere = {};
+        if (mode) statWhere.mode = mode;
+
         const stats = await db.game.findOne({
             raw: true,
             attributes: [
@@ -19,6 +22,7 @@ class InputService {
                 attributes: [],
                 required: true,
                 model: db.stat,
+                where: statWhere,
                 include: {
                     attributes: [],
                     required: true,
@@ -31,7 +35,10 @@ class InputService {
         return { ...stats, kills: stats.kills || 0, kd: stats.kills / Math.max(1, stats.matches - stats.wins) };
     };
 
-    getDailyStats = async ({ id }) => {
+    getDailyStats = async ({ id, mode }) => {
+        const statWhere = {};
+        if (mode) statWhere.mode = mode;
+
         const dailyStats = await db.game.findAll({
             raw: true,
             attributes: [
@@ -52,6 +59,7 @@ class InputService {
                 attributes: [],
                 required: true,
                 model: db.stat,
+                where: statWhere,
                 include: {
                     attributes: [],
                     required: true,
@@ -64,7 +72,10 @@ class InputService {
         return dailyStats.map(s => ({ ...s, kd: s.kills / Math.max(1, s.matches - s.wins) }));
     };
 
-    getInputPlacements = async ({ id }) => {
+    getInputPlacements = async ({ id, mode }) => {
+        const statWhere = {};
+        if (mode) statWhere.mode = mode;
+
         const placements = await db.game.findAll({
             raw: true,
             attributes: [
@@ -77,6 +88,7 @@ class InputService {
                 attributes: [],
                 required: true,
                 model: db.stat,
+                where: statWhere,
                 include: {
                     attributes: [],
                     required: true,

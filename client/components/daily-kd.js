@@ -1,13 +1,17 @@
 import React from 'react';
 import { Col } from 'react-flexbox-grid';
 import { Line } from 'react-chartjs-2';
+import qs from 'querystring';
 import Error from './error';
 import useFetch from '../util/use-fetch';
 import Card from './card';
 import { chartOptions, chartData } from '../config/daily-kd-config';
 
-const DailyKD = ({ inputId }) => {
-    const res = useFetch(`/api/inputs/${inputId}/daily-stats`);
+const DailyKD = ({ inputId, mode }) => {
+    const params = {
+        mode: mode !== 'all' ? mode : undefined,
+    };
+    const res = useFetch(`/api/inputs/${inputId}/daily-stats?${qs.stringify(params)}`);
 
     return (
         <Card title="K/D per Day" loading={res.loading}>

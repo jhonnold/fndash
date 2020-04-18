@@ -2,13 +2,18 @@ import React from 'react';
 import { Col, Row, Grid } from 'react-flexbox-grid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import moment from 'moment';
+import qs from 'querystring';
 import Error from './error';
 import useFetch from '../util/use-fetch';
 import getIconForPlacement from '../util/icon-for-placement';
 import Card from './card';
 
-const Records = ({ inputId }) => {
-    const res = useFetch(`/api/games/records?inputId=${inputId}`);
+const Records = ({ inputId, mode }) => {
+    const params = {
+        inputId,
+        mode: mode !== 'all' ? mode : undefined,
+    };
+    const res = useFetch(`/api/games/records?${qs.stringify(params)}`);
 
     return (
         <Card title="Records" loading={res.loading}>
