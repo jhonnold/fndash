@@ -1,6 +1,11 @@
+const { Op } = require('sequelize');
+
+const IMPORTANT_NAMES = ['showdownalt', 'default', 'showdown', 'showdowntournament'];
+const IMPORTANT_MODES = ['solo', 'duo', 'trios', 'squad'];
+
 module.exports = (sequelize, DataTypes) => {
     const Stat = sequelize.define(
-        'Stat',
+        'stat',
         {
             id: {
                 type: DataTypes.INTEGER,
@@ -29,20 +34,27 @@ module.exports = (sequelize, DataTypes) => {
         {
             tableName: 'stat',
             underscored: true,
+            defaultScope: {
+                where: {
+                    name: { [Op.in]: IMPORTANT_NAMES },
+                    mode: { [Op.in]: IMPORTANT_MODES },
+                },
+            },
         }
     );
 
     Stat.associate = db => {
-        db.Stat.belongsTo(db.Input, {
+        db.stat.belongsTo(db.input, {
             foreignKey: 'inputId',
-            as: 'input',
         });
 
-        db.Stat.hasMany(db.Game, {
+        db.stat.hasMany(db.game, {
             foreignKey: 'statId',
-            as: 'games',
         });
     };
 
     return Stat;
 };
+
+module.exports.IMPORTANT_MODES = IMPORTANT_MODES;
+module.exports.IMPORTANT_NAMES = IMPORTANT_NAMES;

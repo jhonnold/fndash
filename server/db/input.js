@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
     const Input = sequelize.define(
-        'Input',
+        'input',
         {
             id: {
                 type: DataTypes.INTEGER,
@@ -19,14 +19,12 @@ module.exports = (sequelize, DataTypes) => {
     );
 
     Input.associate = db => {
-        db.Input.belongsTo(db.User, {
+        db.input.belongsTo(db.user, {
             foreignKey: 'userId',
-            as: 'user',
         });
 
-        db.Input.hasMany(db.Stat, {
+        db.input.hasMany(db.stat, {
             foreignKey: 'inputId',
-            as: 'stats',
         });
     };
 

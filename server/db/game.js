@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
     const Game = sequelize.define(
-        'Game',
+        'game',
         {
             id: {
                 type: DataTypes.INTEGER,
@@ -21,9 +21,8 @@ module.exports = (sequelize, DataTypes) => {
     );
 
     Game.associate = db => {
-        db.Game.belongsTo(db.Stat, {
+        db.game.belongsTo(db.stat, {
             foreignKey: 'statId',
-            as: 'stat',
         });
     };
 

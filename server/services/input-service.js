@@ -1,16 +1,12 @@
-const { Op } = require('sequelize');
 const db = require('../db');
-
-const IMPORTANT_STAT_NAMES = ['showdownalt', 'default', 'showdown', 'showdowntournament'];
-const IMPORTANT_STAT_MODES = ['solo', 'duo', 'trios', 'squad'];
 
 class InputService {
     getInputStats = async ({ id }) => {
-        const stats = await db.Game.findOne({
+        const stats = await db.game.findOne({
             raw: true,
             attributes: [
-                [db.sequelize.fn('count', db.sequelize.col('Game.id')), 'matches'],
-                [db.sequelize.fn('sum', db.sequelize.col('Game.kills')), 'kills'],
+                [db.sequelize.fn('count', db.sequelize.col('game.id')), 'matches'],
+                [db.sequelize.fn('sum', db.sequelize.col('game.kills')), 'kills'],
                 [
                     db.sequelize.fn(
                         'count',
@@ -22,17 +18,11 @@ class InputService {
             include: {
                 attributes: [],
                 required: true,
-                model: db.Stat,
-                as: 'stat',
-                where: {
-                    name: { [Op.in]: IMPORTANT_STAT_NAMES },
-                    mode: { [Op.in]: IMPORTANT_STAT_MODES },
-                },
+                model: db.stat,
                 include: {
                     attributes: [],
                     required: true,
-                    model: db.Input,
-                    as: 'input',
+                    model: db.input,
                     where: { id },
                 },
             },
@@ -42,12 +32,12 @@ class InputService {
     };
 
     getDailyStats = async ({ id }) => {
-        const dailyStats = await db.Game.findAll({
+        const dailyStats = await db.game.findAll({
             raw: true,
             attributes: [
                 [db.sequelize.fn('date_trunc', 'day', db.sequelize.col('time_played')), 'day'],
-                [db.sequelize.fn('count', db.sequelize.col('Game.id')), 'matches'],
-                [db.sequelize.fn('sum', db.sequelize.col('Game.kills')), 'kills'],
+                [db.sequelize.fn('count', db.sequelize.col('game.id')), 'matches'],
+                [db.sequelize.fn('sum', db.sequelize.col('game.kills')), 'kills'],
                 [
                     db.sequelize.fn(
                         'sum',
@@ -61,17 +51,11 @@ class InputService {
             include: {
                 attributes: [],
                 required: true,
-                model: db.Stat,
-                as: 'stat',
-                where: {
-                    name: { [Op.in]: IMPORTANT_STAT_NAMES },
-                    mode: { [Op.in]: IMPORTANT_STAT_MODES },
-                },
+                model: db.stat,
                 include: {
                     attributes: [],
                     required: true,
-                    model: db.Input,
-                    as: 'input',
+                    model: db.input,
                     where: { id },
                 },
             },
@@ -81,28 +65,22 @@ class InputService {
     };
 
     getInputPlacements = async ({ id }) => {
-        const placements = await db.Game.findAll({
+        const placements = await db.game.findAll({
             raw: true,
             attributes: [
                 [db.sequelize.col('stat.mode'), 'mode'],
                 'placement',
-                [db.sequelize.fn('count', db.sequelize.col('Game.placement')), 'count'],
+                [db.sequelize.fn('count', db.sequelize.col('game.placement')), 'count'],
             ],
             group: [db.sequelize.col('stat.mode'), 'placement'],
             include: {
                 attributes: [],
                 required: true,
-                model: db.Stat,
-                as: 'stat',
-                where: {
-                    name: { [Op.in]: IMPORTANT_STAT_NAMES },
-                    mode: { [Op.in]: IMPORTANT_STAT_MODES },
-                },
+                model: db.stat,
                 include: {
                     attributes: [],
                     required: true,
-                    model: db.Input,
-                    as: 'input',
+                    model: db.input,
                     where: { id },
                 },
             },
