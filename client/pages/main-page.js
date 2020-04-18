@@ -13,12 +13,14 @@ const MainPage = () => (
             <title>FN Dash</title>
         </Helmet>
         <Banner />
-        <Grid className="main">
-            <Switch>
-                <Route path="/signup" component={SignUp} />
-                <Route path="/about" component={About} />
-                <Route path="/" component={Home} />
-            </Switch>
+        <Grid fluid className="main">
+            <Grid>
+                <Switch>
+                    <Route path="/signup" component={SignUp} />
+                    <Route path="/about" component={About} />
+                    <Route path="/" component={Home} />
+                </Switch>
+            </Grid>
         </Grid>
     </>
 );
