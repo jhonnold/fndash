@@ -1,6 +1,6 @@
 import React from 'react';
 import { Col } from 'react-flexbox-grid';
-import { Line } from 'react-chartjs-2';
+import { LineChart } from '@jhonnold/react-chart-js';
 import qs from 'querystring';
 import Error from './error';
 import useFetch from '../util/use-fetch';
@@ -20,7 +20,7 @@ const DailyKD = ({ inputId, mode }) => {
                     <Error message="Unable to load K/D data!" />
                 </Col>
             ) : res.body && res.body.length ? (
-                <Line data={chartData(res.body)} options={chartOptions} />
+                <LineChart data={chartData(res.body)} options={chartOptions} />
             ) : (
                 <p className="text-off-white">No games recorded!</p>
             )}

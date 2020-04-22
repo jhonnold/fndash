@@ -34,7 +34,7 @@ export const chartOptions = {
 };
 
 export const chartData = data => canvas => {
-    if (!data) return null;
+    if (!data || !canvas) return null;
 
     const ctx = canvas.getContext('2d');
     const lineGradient = ctx.createLinearGradient(0, 0, 400, 0);

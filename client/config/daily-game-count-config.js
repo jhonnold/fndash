@@ -40,7 +40,7 @@ export const chartOptions = {
 };
 
 export const chartData = data => canvas => {
-    if (!data) return null;
+    if (!data || !canvas) return null;
 
     const ctx = canvas.getContext('2d');
 

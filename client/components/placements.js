@@ -1,6 +1,6 @@
 import React from 'react';
 import { Col } from 'react-flexbox-grid';
-import { Pie } from 'react-chartjs-2';
+import { PieChart } from '@jhonnold/react-chart-js';
 import qs from 'querystring';
 import Error from './error';
 import useFetch from '../util/use-fetch';
@@ -20,10 +20,10 @@ const Placements = ({ inputId, mode }) => {
                     <Error message="Unable to load placements data!" />
                 </Col>
             ) : res.body && res.body.length ? (
-                <Pie data={chartData(res.body)} options={chartOptions} />
+                <PieChart data={chartData(res.body)} options={chartOptions} />
             ) : (
-                        <p className="text-off-white">No games recorded!</p>
-                    )}
+                <p className="text-off-white">No games recorded!</p>
+            )}
         </Card>
     );
 };

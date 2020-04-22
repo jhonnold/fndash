@@ -1,6 +1,6 @@
 import React from 'react';
 import { Col } from 'react-flexbox-grid';
-import { Bar } from 'react-chartjs-2';
+import { BarChart } from '@jhonnold/react-chart-js';
 import qs from 'querystring';
 import Error from './error';
 import useFetch from '../util/use-fetch';
@@ -20,10 +20,10 @@ const DailyGameCount = ({ inputId, mode }) => {
                     <Error message="Unable to load games played!" />
                 </Col>
             ) : res.body && res.body.length ? (
-                <Bar data={chartData(res.body)} options={chartOptions} />
+                <BarChart data={chartData(res.body)} options={chartOptions} />
             ) : (
-                        <p className="text-off-white">No games recorded!</p>
-                    )}
+                <p className="text-off-white">No games recorded!</p>
+            )}
         </Card>
     );
 };
