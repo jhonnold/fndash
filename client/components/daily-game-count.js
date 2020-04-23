@@ -1,6 +1,6 @@
 import React from 'react';
 import { Col } from 'react-flexbox-grid';
-import { BarChart } from '@jhonnold/react-chart-js';
+import { BarChart } from '@jhonnold/react-chart.js';
 import qs from 'querystring';
 import Error from './error';
 import useFetch from '../util/use-fetch';
